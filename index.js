@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware для проверки токена
 app.use((req, res, next) => {
-	const accessToken = req.headers["authorization"];
+	const accessToken = req.headers["Authorization"];
 	if (accessToken === process.env.ACCESS_TOKEN) {
 		next();
 	} else {
