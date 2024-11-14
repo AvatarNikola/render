@@ -37,11 +37,14 @@ client.connect();
 
 // Создание таблицы tea, если она ещё не создана
 client.query(
-	`CREATE TABLE IF NOT EXISTS tea (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-    description TEXT
-  );`,
+	`CREATE TABLE teas (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  type VARCHAR(255),
+  description TEXT,
+  image VARCHAR(255),
+  price DECIMAL(10, 2) NOT NULL
+);`,
 	(err) => {
 		if (err) {
 			console.error("Ошибка при создании таблицы", err);
