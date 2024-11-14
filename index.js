@@ -4,7 +4,15 @@ const { Client } = require("pg");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json()); // Middleware для обработки JSON
+// Middleware для проверки токена
+app.use((req, res, next) => {
+	const accessToken = req.headers["authorization"];
+	if (accessToken === process.env.ACCESS_TOKEN) {
+		next();
+	} else {
+		res.status(403).json({ error: "Access denied" });
+	}
+});
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
