@@ -4,6 +4,7 @@ const app = express();
 // Включаем CORS для всех запросов
 app.use(cors());
 const { Client } = require("pg");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
