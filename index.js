@@ -1,4 +1,8 @@
 const express = require("express");
+const cors = require("cors"); // Импортируем cors
+
+// Включаем CORS для всех запросов
+app.use(cors());
 const { Client } = require("pg");
 
 const app = express();
