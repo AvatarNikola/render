@@ -77,3 +77,32 @@ app.delete("/delete-tea/:id", async (req, res) => {
 		res.status(500).json({ error: "Ошибка при удалении чая" });
 	}
 });
+
+// Маршрут для получения одного чая по id
+app.get("/get-tea/:id", async (req, res) => {
+	const teaId = req.params.id;
+
+	try {
+		const result = await client.query("SELECT * FROM tea WHERE id = $1", [teaId]);
+
+		if (result.rows.length === 0) {
+			return res.status(404).json({ error: "Чай не найден" });
+		}
+
+		res.status(200).json({ tea: result.rows[0] });
+	} catch (err) {
+		console.error("Ошибка при получении чая", err);
+		res.status(500).json({ error: "Ошибка при получении чая" });
+	}
+});
+
+// Маршрут для получения всех чаёв
+app.get("/get-teas", async (req, res) => {
+	try {
+		const result = await client.query("SELECT * FROM tea");
+		res.status(200).json({ teas: result.rows });
+	} catch (err) {
+		console.error("Ошибка при получении чаёв", err);
+		res.status(500).json({ error: "Ошибка при получении чаёв" });
+	}
+});
