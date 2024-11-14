@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require("cors"); // Импортируем cors
-
+const app = express();
 // Включаем CORS для всех запросов
 app.use(cors());
 const { Client } = require("pg");
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware для проверки токена
