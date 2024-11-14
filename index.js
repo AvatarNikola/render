@@ -7,16 +7,6 @@ const { Client } = require("pg");
 
 const PORT = process.env.PORT || 3000;
 
-// Middleware для проверки токена
-app.use((req, res, next) => {
-	const accessToken = req.headers["Authorization"];
-	if (accessToken === process.env.ACCESS_TOKEN) {
-		next();
-	} else {
-		res.status(403).json({ error: "Access denied" });
-	}
-});
-
 app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
@@ -34,25 +24,6 @@ const client = new Client({
 });
 
 client.connect();
-
-// Создание таблицы tea, если она ещё не создана
-client.query(
-	`CREATE TABLE items (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  type VARCHAR(255),
-  description TEXT,
-  image VARCHAR(255),
-  price DECIMAL(10, 2) NOT NULL
-);`,
-	(err) => {
-		if (err) {
-			console.error("Ошибка при создании таблицы", err);
-		} else {
-			console.log("Таблица 'tea' успешно создана или уже существует");
-		}
-	}
-);
 
 // Маршрут для добавления нового чая
 app.post("/add-tea", async (req, res) => {
